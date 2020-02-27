@@ -33,7 +33,7 @@ spec:
 {{ toYaml . | indent 8 }}
 {{- end }}
     spec:
-      updateStrategy:
+      strategy:
         type: {{ .Values.updateStrategy }}
         {{- if .Values.rollingUpdatePartition }}
         rollingUpdate:
