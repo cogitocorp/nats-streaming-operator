@@ -3,9 +3,9 @@ entries:
   nats-streaming-operator:
   - apiVersion: v1
     appVersion: 0.2.3
-    created: "2020-02-26T17:09:49.918929-05:00"
+    created: "2020-02-27T14:30:53.684984-05:00"
     description: Operator for managing NATS Streaming clusters running on Kubernetes.
-    digest: 9f13a1f4c145f4f172e194b85039537a4e3890213ab6e717e9e751be38292f2a
+    digest: 6ad043ac976f925e54d35cd5873a145f32686b9f14d6009ecee7a65953f1e784
     home: https://github.com/nats-io/nats-streaming-operator
     icon: https://bitnami.com/assets/stacks/nats/img/nats-stack-110x117.png
     keywords:
@@ -24,4 +24,4 @@ entries:
     urls:
     - https://cogitocorp.github.io/nats-streaming-operator/helm/nats-streaming-operator/nats-streaming-operator-1.0.0.tgz
     version: 1.0.0
-generated: "2020-02-26T17:09:49.915815-05:00"
+generated: "2020-02-27T14:30:53.683452-05:00"
