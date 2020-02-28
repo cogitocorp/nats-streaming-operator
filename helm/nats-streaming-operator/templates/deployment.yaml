@@ -20,9 +20,11 @@ spec:
       release: {{ .Release.Name }}
   strategy:
     type: {{ .Values.updateStrategy }}
-  {{- if ne .Values.updateStrategy "RollingUpdate" }}
-    rollingUpdate: null
-  {{- end }}
+    {{- if eq .Values.updateStrategy "RollingUpdate" }}
+    rollingUpdate:
+      maxSurge: {{ .Values.rollingUpdateMaxSurge }}
+      maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable }}
+    {{- end }}
   template:
     metadata:
       labels:
@@ -33,12 +35,6 @@ spec:
 {{ toYaml . | indent 8 }}
 {{- end }}
     spec:
-      strategy:
-        type: {{ .Values.updateStrategy }}
-        {{- if .Values.rollingUpdatePartition }}
-        rollingUpdate:
-          partition: {{ .Values.rollingUpdatePartition }}
-        {{- end }}
       {{- if .Values.rbacEnabled }}
       serviceAccountName: nats-streaming-operator
       {{- end }}
