@@ -1,7 +1,7 @@
 ## Specify if RBAC authorization is enabled.
 ## ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 ##
-rbacEnabled: true
+rbacEnabled: false
 
 cluster:
   # Deploy a NATS Streaming Cluster with the operator
@@ -11,7 +11,7 @@ cluster:
   name: nats-streaming-cluster
 
   # Version of the NATS Streaming Cluster to deploy
-  version: 0.12.2
+  version: 0.17.0
 
   # Number of nodes in cluster
   size: 3
@@ -32,7 +32,7 @@ cluster:
 image:
   registry: docker.io
   repository: synadia/nats-streaming-operator
-  tag: v0.2.2-v1alpha1
+  tag: v0.3.0-v1alpha1
 
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
