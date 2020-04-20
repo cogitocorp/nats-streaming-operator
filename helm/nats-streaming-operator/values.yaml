@@ -8,7 +8,7 @@ cluster:
   enabled: true
 
   # Name of the NATS Streaming Cluster
-  name: nats-streaming-cluster-test
+  name: nats-streaming-cluster
 
   # Version of the NATS Streaming Cluster to deploy
   version: 0.17.0
@@ -17,7 +17,7 @@ cluster:
   size: 3
 
   # NATS Cluster service name
-  natsSvc: nats-cluster-test
+  natsSvc: nats-cluster
 
   config:
     debug: true
