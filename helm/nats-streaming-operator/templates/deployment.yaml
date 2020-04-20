@@ -18,13 +18,6 @@ spec:
     matchLabels:
       app: {{ template "nats.name" . }}
       release: {{ .Release.Name }}
-  strategy:
-    type: {{ .Values.updateStrategy }}
-    {{- if eq .Values.updateStrategy "RollingUpdate" }}
-    rollingUpdate:
-      maxSurge: {{ .Values.rollingUpdateMaxSurge }}
-      maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable }}
-    {{- end }}
   template:
     metadata:
       labels:
