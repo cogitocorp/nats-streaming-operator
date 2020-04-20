@@ -8,7 +8,7 @@ cluster:
   enabled: true
 
   # Name of the NATS Streaming Cluster
-  name: nats-streaming-cluster
+  name: stan
 
   # Version of the NATS Streaming Cluster to deploy
   version: 0.17.0
@@ -17,17 +17,30 @@ cluster:
   size: 3
 
   # NATS Cluster service name
-  natsSvc: nats-cluster
+  natsSvc: nats-cluster-test
 
   config:
     debug: true
     trace: true
     raftLogging: true
+    ftMode:
+      enabled: true
+      groupName: stan
+      nfsVolumeName: stan-store-dir
+      pvcName: efs-nats-streaming-pvc
+      mountPath: "/pv"
 
   metrics:
     enabled: true
     image: synadia/prometheus-nats-exporter
     version: "0.6.0"
+    containerPort: 7777
+    args:
+    - -varz
+    - -channelz
+    - -serverz
+    - -DV
+    - http://localhost:8222
 
 image:
   registry: docker.io
@@ -82,10 +95,6 @@ podAnnotations: {}
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 ##
 podLabels: {}
-
-## Partition update strategy
-## https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
-# rollingUpdatePartition:
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
