@@ -11,7 +11,11 @@ spec:
   config:
     debug: {{ .Values.cluster.config.debug }}
     trace: {{ .Values.cluster.config.trace }}
+    {{- if .Values.cluster.config.ftMode.enabled }}
+    ftGroup: {{ .Values.cluster.config.ftMode.groupName }}
+    {{- else }}
     raftLogging: {{ .Values.cluster.config.raftLogging }}
+    {{- end }}
 
   template:
     {{- if .Values.cluster.metrics.enabled }}
@@ -27,10 +31,27 @@ spec:
         {{- if .Values.cluster.metrics.enabled }}
         - name: metrics
           image: {{ .Values.cluster.metrics.image }}:{{ .Values.cluster.metrics.version }}
-          args: ["-varz", "-channelz", "-serverz", "-DV", "http://localhost:8222"]
+          {{- if .Values.cluster.metrics.args }}
+          args:
+          {{- range .Values.cluster.metrics.args }}
+          - {{ . }}
+          {{- end }}
+          {{- end }}
           ports:
           - name: metrics
-            containerPort: 7777
+            containerPort: {{ .Values.cluster.metrics.containerPort }}
             protocol: TCP
         {{- end }}
+        {{- if .Values.cluster.config.ftMode.enabled }}
+          volumeMounts:
+          - mountPath: {{ .Values.cluster.config.ftMode.mountPath }}
+            name: {{ .Values.cluster.config.ftMode.nfsVolumeName }}
+        {{- end }}
+
+      {{- if .Values.cluster.config.ftMode.enabled }}
+      volumes:
+      - name: {{ .Values.cluster.config.ftMode.nfsVolumeName }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.cluster.config.ftMode.pvcName }}
+      {{- end }}
 {{- end }}
